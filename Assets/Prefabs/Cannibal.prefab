@@ -210,7 +210,6 @@ GameObject:
   - component: {fileID: 4460461900456384646}
   - component: {fileID: 4460461900619801313}
   - component: {fileID: 4460461900619801318}
-  - component: {fileID: 4460461900619801312}
   - component: {fileID: 4460461900619801315}
   m_Layer: 0
   m_Name: Cannibal
@@ -260,7 +259,7 @@ Animator:
   m_GameObject: {fileID: 4460461900456150182}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 22208d13f33965a44afd788ccfc1cc43, type: 2}
+  m_Controller: {fileID: 9100000, guid: 18e3fce664a18e546a8778ee81d2eae9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -269,18 +268,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4460461900619801312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4460461900456150182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9f3cb0e3f070584fa8a15f7ab60d2a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4460461900619801315
 MonoBehaviour:
   m_ObjectHideFlags: 0

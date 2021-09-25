@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
     private Animator animator;
+    private NavMeshAgent agent;
 
-    [Range(0, 100)]
     private float health = 100;
 
     public float Health { get => health; set => health = value; }
@@ -12,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     
@@ -20,11 +22,15 @@ public class EnemyHealth : MonoBehaviour
         if (health == 0)
         {
             animator.SetTrigger("Death");
+            agent.isStopped = true;
         }
     }
 
     public void ReduceHealth(float count)
     {
-        health -= count;
+        if (health > 0)
+        {
+            health -= count;
+        }
     }
 }

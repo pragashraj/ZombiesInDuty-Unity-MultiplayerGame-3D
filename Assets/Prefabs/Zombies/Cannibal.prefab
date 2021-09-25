@@ -1216,9 +1216,10 @@ GameObject:
   - component: {fileID: 6547503382097206267}
   - component: {fileID: 6547503382097206268}
   - component: {fileID: -3301509155835036844}
+  - component: {fileID: 4596627852478180109}
   m_Layer: 0
   m_Name: Cannibal
-  m_TagString: Enemy_Cannibal
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1251,7 +1252,7 @@ Animator:
   m_GameObject: {fileID: 6547503382097206269}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 22208d13f33965a44afd788ccfc1cc43, type: 2}
+  m_Controller: {fileID: 9100000, guid: 18e3fce664a18e546a8778ee81d2eae9, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1324,6 +1325,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae80f73377ecaec46a0332c3a3df4e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &4596627852478180109
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547503382097206269}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6547503382112101311
 GameObject:
   m_ObjectHideFlags: 0

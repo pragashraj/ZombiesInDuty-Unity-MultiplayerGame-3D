@@ -450,9 +450,10 @@ GameObject:
   - component: {fileID: 3514064024830875575}
   - component: {fileID: 3514064024830875572}
   - component: {fileID: -3303985620712016899}
+  - component: {fileID: 7845326550539308452}
   m_Layer: 0
   m_Name: Ghoul
-  m_TagString: Enemy_Ghoul
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -486,7 +487,7 @@ Animator:
   m_GameObject: {fileID: 3513036839377038964}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d49bca50812be349b21c7a65180ca8a, type: 2}
+  m_Controller: {fileID: 9100000, guid: ad3d5c5fa189d174fa71cf0a8f084681, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -559,6 +560,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae80f73377ecaec46a0332c3a3df4e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &7845326550539308452
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513036839377038964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &3513053293030531472
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
 
     private void HandleWalk()
     {
-        animator.SetBool("Walk", true);
+        animator.SetFloat("Movement", 0.25f, 0.1f, Time.deltaTime);
         enemyAI.MoveTo(roamPosition);
         agent.speed = walkingSpeed;
         if (Vector3.Distance(transform.position, roamPosition) < 1f)
@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
 
     private void HandleChase()
     {
-        animator.SetBool("Run", true);
+        animator.SetFloat("Movement", 0.5f, 0.1f, Time.deltaTime);
         transform.LookAt(player);
         targetPosition = player.position + offset;
         enemyAI.MoveTo(targetPosition);
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour
 
     private void HandleAttack()
     {
-        animator.SetBool("Attack", true);
+        animator.SetFloat("Movement", 0.75f, 0.1f, Time.deltaTime);
         transform.LookAt(player);
     }
 
@@ -92,7 +92,7 @@ public class EnemyController : MonoBehaviour
         } else
         {
             state = State.WALKING;
-            animator.SetBool("Run", false);
+            animator.SetFloat("Movement", 0.25f, 0.1f, Time.deltaTime);
         }
     }
 
@@ -100,13 +100,10 @@ public class EnemyController : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) <= 2.5f)
         {
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
             state = State.ATTACKING;
             agent.isStopped = true;
         } else
         {
-            animator.SetBool("Attack", false);
             agent.isStopped = false;
         }
     }
@@ -117,7 +114,7 @@ public class EnemyController : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, player.position) > 20f)
             {
-                animator.SetBool("Run", false);
+                animator.SetFloat("Movement", 0.25f, 0.1f, Time.deltaTime);
                 state = State.WALKING;
             }
         }

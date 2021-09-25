@@ -4,14 +4,13 @@ public class CanibalManager : MonoBehaviour
 {
     [SerializeField] private string animatorType;
 
-    private CannibalAnimatorController cannibalAnimatorCotroller;
+    private Animator animator;
 
-    void Start()
+    private void Start()
     {
-        cannibalAnimatorCotroller = GetComponent<CannibalAnimatorController>();
+        animator = GetComponent<Animator>();
     }
 
-    
     void Update()
     {
         ControlAnimations();
@@ -21,56 +20,20 @@ public class CanibalManager : MonoBehaviour
     {
         switch(animatorType)
         {
-            case "IDLE": HandleIdleAnimation();
+            case "IDLE":
+                HandleAnimation(0);
                 break;
-            case "ATTACK": HandleAttackAnimation();
+            case "ATTACK":
+                HandleAnimation(0.75f);
                 break;
-            default: HandleIdleAnimation();
+            default:
+                HandleAnimation(0);
                 return;
         }
     }
 
-    private void HandleIdleAnimation()
+    private void HandleAnimation(float value)
     {
-        cannibalAnimatorCotroller.Walk(false);
-        cannibalAnimatorCotroller.Run(false);
-        cannibalAnimatorCotroller.Attack(false);
-        cannibalAnimatorCotroller.PunchLeft(false);
-        cannibalAnimatorCotroller.PunchRight(false);
-    }
-
-    private void HandleWalkAnimation()
-    {
-        cannibalAnimatorCotroller.Walk(true);
-    }
-
-    private void HandleRunAnimation()
-    {
-        cannibalAnimatorCotroller.Run(true);
-    }
-
-    private void HandleAttackAnimation()
-    {
-        cannibalAnimatorCotroller.Attack(true);
-    }
-
-    private void HandlePunchLeftAnimation()
-    {
-        cannibalAnimatorCotroller.PunchLeft(true);
-    }
-
-    private void HandlePunchRightAnimation()
-    {
-        cannibalAnimatorCotroller.PunchRight(true);
-    }
-
-    private void HandleHitNormalAnimation()
-    {
-        cannibalAnimatorCotroller.HitNormal();
-    }
-
-    private void HandleHitHardAnimation()
-    {
-        cannibalAnimatorCotroller.HitHard();
+        animator.SetFloat("Movement", value, 0.1f, Time.deltaTime);
     }
 }
