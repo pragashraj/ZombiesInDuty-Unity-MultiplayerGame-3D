@@ -27,6 +27,8 @@ public class NurseManager : MonoBehaviour
                 break;
             case "TALKING": TalkingAnimation(true);
                 break;
+            case "WORKING": HandleWorker(true);
+                break;
             default: HandleIdleAnimation();
                 return;
         }
@@ -46,5 +48,10 @@ public class NurseManager : MonoBehaviour
     private void TypingAnimation(bool active)
     {
         animator.SetBool("Typing", active);
+    }
+
+    private void HandleWorker(bool active)
+    {
+        animator.SetBool("Working", active);
     }
 }
