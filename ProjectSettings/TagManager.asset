@@ -11,6 +11,8 @@ TagManager:
   - Look Root
   - PlayerX
   - Officer
+  - Enemy_Ghoul
+  - Enemy_Cannibal
   layers:
   - Default
   - TransparentFX

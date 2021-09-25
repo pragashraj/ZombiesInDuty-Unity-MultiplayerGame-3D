@@ -21,4 +21,9 @@ public class PlayerHealth : MonoBehaviour
     {
         return value * min / max;
     }
+
+    public void HandleHealthValues(float count)
+    {
+        health += count;
+    }
 }
