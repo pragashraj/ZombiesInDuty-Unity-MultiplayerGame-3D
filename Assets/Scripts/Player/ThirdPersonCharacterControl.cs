@@ -1,32 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 public class ThirdPersonCharacterControl : MonoBehaviour
 {
-    private enum State
-    {
-        START, IDLE, WALKING, RUNNING
-    }
-
-    [SerializeField] private float walkingSpeed;
-    [SerializeField] private float speedMultiplyer = 2.5f;
-
-    private float speed;
-    private State state = State.START;
-
     private PlayerAnimatorController animatorController;
 
     private void Start()
     {
         animatorController = GetComponent<PlayerAnimatorController>();
-        state = State.IDLE;
-        speed = walkingSpeed;
     }
 
     private void Update()
     {
         PlayerMovement();
-        speed = state == State.WALKING ? walkingSpeed : walkingSpeed * speedMultiplyer;
     }
 
     void PlayerMovement()
@@ -35,17 +20,22 @@ public class ThirdPersonCharacterControl : MonoBehaviour
 
         if (ver > 0 && !Input.GetKey(KeyCode.LeftShift))
         {
-            state = State.WALKING;
-            animatorController.HandleWalk();
+            animatorController.HandleWalk(0.5f);
         }
         else if (ver > 0 && Input.GetKey(KeyCode.LeftShift))
         {
-            state = State.RUNNING;
             animatorController.HandleRun();
+        }
+        else if(Input.GetKey(KeyCode.D))
+        {
+            animatorController.WalkHorizontal(0.5f);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            animatorController.WalkHorizontal(-0.5f);
         }
         else
         {
-            state = State.IDLE;
             animatorController.HandleIdle();
         }
     }

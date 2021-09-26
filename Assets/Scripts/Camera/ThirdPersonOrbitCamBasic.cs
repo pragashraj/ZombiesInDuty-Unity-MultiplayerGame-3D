@@ -76,7 +76,15 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		cam.position =  player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
 	}
 
-    public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
+	private void FixedUpdate()
+	{
+		if (Input.GetAxis("Vertical") > 0)
+		{
+			player.rotation = Quaternion.Euler(0, angleH, 0);
+		}
+	}
+
+	public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
 	{
 		targetPivotOffset = newPivotOffset;
 		targetCamOffset = newCamOffset;

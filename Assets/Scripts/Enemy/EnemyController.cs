@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     {
         enemyAI = gameObject.GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("PlayerX").transform;
     }
 
     private void Start()

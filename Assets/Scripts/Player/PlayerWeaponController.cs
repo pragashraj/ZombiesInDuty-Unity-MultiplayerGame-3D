@@ -7,12 +7,6 @@ public class PlayerWeaponController : MonoBehaviour
     private float damage = 20f;
     private float range = 100f;
 
-    void Start()
-    {
-        
-    }
-
-    
     void Update()
     {
         HandleShoot();

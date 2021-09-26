@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3514064024830875577}
-  range: 5
+  range: 2
 --- !u!114 &-3303985620712016899
 MonoBehaviour:
   m_ObjectHideFlags: 0

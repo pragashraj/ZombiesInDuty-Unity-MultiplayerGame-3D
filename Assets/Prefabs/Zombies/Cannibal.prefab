@@ -1312,7 +1312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 6547503382097206266}
-  range: 5
+  range: 2
 --- !u!114 &-3301509155835036844
 MonoBehaviour:
   m_ObjectHideFlags: 0
