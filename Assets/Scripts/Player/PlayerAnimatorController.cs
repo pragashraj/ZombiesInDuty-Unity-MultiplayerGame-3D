@@ -4,23 +4,18 @@ public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    public void WalkAnim(bool value)
+    public void HandleWalk()
     {
-        animator.SetBool("walk", value);
+        animator.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
     }
 
-    public void RunAnim(bool active)
+    public void HandleRun()
     {
-        animator.SetBool("run", active);
+        animator.SetFloat("Forward", 1f, 0.1f, Time.deltaTime);
     }
 
-    public void Idle()
+    public void HandleIdle()
     {
-        animator.SetTrigger("idle");
-    }
-
-    public void Jump (bool active)
-    {
-
+        animator.SetFloat("Forward", 0f, 0.1f, Time.deltaTime);
     }
 }

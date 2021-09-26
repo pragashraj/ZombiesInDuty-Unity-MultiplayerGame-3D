@@ -8,10 +8,11 @@ public class Objective7 : MonoBehaviour
     [SerializeField] private GameObject conversationpanel;
     [SerializeField] private Text speaker;
     [SerializeField] private Text message;
+    [SerializeField] private GameObject nurse;
 
     private GameManager gameManager;
-    private Animator animator;
     private GameObject player;
+    private NurseManager nurseManager;
 
     private List<Conversation> conversations = new List<Conversation>();
 
@@ -42,8 +43,8 @@ public class Objective7 : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindObjectOfType<GameManager>();
-        animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+        nurseManager = nurse.GetComponent<NurseManager>();
         SetConversation(0);
     }
 
@@ -57,8 +58,7 @@ public class Objective7 : MonoBehaviour
             if (objective6 && !objective7)
             {
                 conversationpanel.SetActive(true);
-                animator.SetBool("Working", false);
-                animator.SetBool("Talking", true);
+                nurseManager.AnimatorType = "TALKING";
                 transform.LookAt(player.transform);
                 StartCoroutine(HandleMessages());
             }
@@ -110,9 +110,8 @@ public class Objective7 : MonoBehaviour
 
     private void HandleConversationComplete()
     {
-        gameManager.Objective3Completed = true;
+        gameManager.Objective7Completed = true;
         gameManager.HandleCompletionUI("Objective 7 completed");
-        animator.SetBool("Talking", false);
-        animator.SetBool("Working", true);
+        nurseManager.AnimatorType = "WORKING";
     }
 }

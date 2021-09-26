@@ -6,6 +6,8 @@ public class NurseManager : MonoBehaviour
 
     private Animator animator;
 
+    public string AnimatorType { get => animatorType; set => animatorType = value; }
+
     void Start()
     {
         animator = GetComponent<Animator>();

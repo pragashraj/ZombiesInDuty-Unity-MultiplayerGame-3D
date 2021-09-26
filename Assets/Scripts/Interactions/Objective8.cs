@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Objective8 : MonoBehaviour
 {
     [SerializeField] private GameObject[] quads;
     [SerializeField] private Vector3[] pos;
+    [SerializeField] private GameObject triggerUI;
+    [SerializeField] private Sprite triggerImage;
 
     private GameManager gameManager;
     private AudioManager audioManager;
@@ -31,6 +34,8 @@ public class Objective8 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        triggerUI.GetComponent<Image>().sprite = triggerImage;
+
         bool objective7 = gameManager.Objective7Completed;
         bool objective8 = gameManager.Objective8Completed;
 
@@ -39,6 +44,7 @@ public class Objective8 : MonoBehaviour
             if (objective7 && !objective8)
             {
                 onStay = true;
+                triggerUI.SetActive(true);
             }
         }
     }
@@ -48,14 +54,18 @@ public class Objective8 : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             onStay = false;
+            triggerUI.SetActive(false);
         }
     }
 
     private void HandleCompletion()
     {
+        triggerUI.SetActive(false);
+        gameObject.transform.position = new Vector3(0, -15, 0);
         audioManager.Play("Collect");
         gameManager.Objective8Completed = true;
         gameManager.HandleCompletionUI("Objective 8 completed");
+
         for (int i = 0; i < quads.Length; i++)
         {
             if (i == 0 || i == 1)
@@ -74,5 +84,6 @@ public class Objective8 : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         gameManager.HandleCompletionUI("Ok now clear the area!");
+        gameObject.SetActive(false);
     }
 }
