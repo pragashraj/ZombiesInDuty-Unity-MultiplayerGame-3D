@@ -62,7 +62,7 @@ public class Objective8 : MonoBehaviour
     {
         triggerUI.SetActive(false);
         gameObject.transform.position = new Vector3(0, -15, 0);
-        audioManager.Play("Collect");
+        audioManager.Play("Pickup");
         gameManager.Objective8Completed = true;
         gameManager.HandleCompletionUI("Objective 8 completed");
 

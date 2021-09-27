@@ -22,8 +22,35 @@ public class PlayerHealth : MonoBehaviour
         return value * min / max;
     }
 
-    public void HandleHealthValues(float count)
+    public void IncreaseHealthValue(float count)
     {
-        health += count;
+        if (count != 100)
+        {
+            float healthTemp = health + count;
+            if (healthTemp > 100)
+            {
+                health = 100;
+            }
+            else
+            {
+                health = healthTemp;
+            }
+        }
+    }
+
+    public void DecreaseHealthValue(float count)
+    {
+        if (count != 0)
+        {
+            float healthTemp = health - count;
+            if (healthTemp < 0)
+            {
+                health = 0;
+            }
+            else
+            {
+                health = healthTemp;
+            }
+        }
     }
 }

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform mapCam;
     [SerializeField] private float scale;
 
+    private AudioManager audioManager;
+
     private bool isMapOpen;
 
     private bool objective1Completed;
@@ -31,11 +33,25 @@ public class GameManager : MonoBehaviour
     public bool Objective7Completed { get => objective7Completed; set => objective7Completed = value; }
     public bool Objective8Completed { get => objective8Completed; set => objective8Completed = value; }
 
+
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
             isMapOpen = !isMapOpen;
+            if (isMapOpen)
+            {
+                PlayAudio("InventoryOpen");
+            }
+            else
+            {
+                PlayAudio("InventoryClose");
+            }
         }
 
         mapUI.SetActive(isMapOpen);
@@ -51,6 +67,11 @@ public class GameManager : MonoBehaviour
             float scroll = Input.mouseScrollDelta.y;
             mapCam.Translate(0, scroll * scale, 0, Space.Self);
         }
+    }
+
+    private void PlayAudio(string name)
+    {
+        audioManager.Play(name);
     }
 
     public void HandleCompletionUI(string message)

@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour
 {
     private enum State
     {
-        WALKING, CHASING, ATTACKING
+        IDLE, WALKING, CHASING, ATTACKING
     }
 
     [SerializeField] private NavMeshAgent agent;
@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        state = State.WALKING;
+        state = State.IDLE;
         startingPosition = transform.position;
         roamPosition = enemyAI.GetRoamingPosition(startingPosition);
     }
@@ -39,6 +39,10 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         SwitchMovements();
+    }
+
+    private void HandleAI()
+    {
         FindTarget();
         IsTargetNear();
         StopChasing();
@@ -54,7 +58,9 @@ public class EnemyController : MonoBehaviour
                 break;
             case State.ATTACKING: HandleAttack();
                 break;
-            default: return;
+            default:
+                animator.SetFloat("Movement", 0f, 0.1f, Time.deltaTime);
+                return;
         }
     }
 
