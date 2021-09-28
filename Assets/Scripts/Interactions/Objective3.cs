@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Objective3 : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Objective3 : MonoBehaviour
     [SerializeField] private Text message;
 
     private GameManager gameManager;
+    private FirstPersonController firstPersonController;
 
     private List<Conversation> conversations = new List<Conversation>();
 
@@ -58,7 +60,9 @@ public class Objective3 : MonoBehaviour
         {
             if (objective2 && !objective3)
             {
+                firstPersonController = other.gameObject.GetComponent<FirstPersonController>();
                 conversationpanel.SetActive(true);
+                firstPersonController.enabled = false;
                 StartCoroutine(HandleMessages());
             }
 
@@ -110,6 +114,7 @@ public class Objective3 : MonoBehaviour
     private void HandleConversationComplete()
     {
         gameManager.Objective3Completed = true;
+        firstPersonController.enabled = true;
         gameManager.HandleCompletionUI("Objective 3 completed");
     }
 }

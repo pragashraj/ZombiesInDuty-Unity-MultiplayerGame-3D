@@ -10,6 +10,7 @@ public class PlayerWeaponController : MonoBehaviour
     private int currentActiveIndex = 0;
     private bool reloading;
     private string weaponType;
+    private bool weaponDisabled;
 
     private Weapon weapon;
     private Animator animator;
@@ -28,10 +29,20 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
-        HandleShoot();
-        HandleWeaponSwitch();
-        HandleWeaponActive();
-        HandleReloading();
+        if (weaponDisabled)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i].weaponObject.SetActive(false);
+            }
+        } 
+        else
+        {
+            HandleShoot();
+            HandleWeaponSwitch();
+            HandleWeaponActive();
+            HandleReloading();
+        }
     }
 
     private void HandleWeaponSwitch()
@@ -159,5 +170,15 @@ public class PlayerWeaponController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         reloading = false;
+    }
+
+    public void DisableWeapon()
+    {
+        weaponDisabled = true;
+    }
+
+    public void EnableWeapon()
+    {
+        weaponDisabled = false;
     }
 }

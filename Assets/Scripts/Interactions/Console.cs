@@ -13,6 +13,7 @@ public class Console : MonoBehaviour
     private ActionLoader actionLoader;
     private AudioManager audioManager;
     private GameManager gameManager;
+    private PlayerWeaponController weaponController;
 
     private bool onStay = false;
     private bool actionComplete = false;
@@ -34,7 +35,8 @@ public class Console : MonoBehaviour
             actionLoader.FillAmount = 0;
             actionLoaderObj.GetComponent<Image>().enabled = false;
             HandleDoorAnim();
-            gameManager.HandleCompletionUI("Door opened");
+            gameManager.CompletionMessageUI("Door opened");
+            weaponController.EnableWeapon();
             StartCoroutine(Reset());
         }
 
@@ -70,10 +72,12 @@ public class Console : MonoBehaviour
                 actionLoaderObj.SetActive(true);
                 fillAmount += 2;
                 actionLoader.FillAmount = fillAmount;
+                weaponController.DisableWeapon();
             } else
             {
                 consoleUI.SetActive(true);
                 actionLoaderObj.SetActive(false);
+                weaponController.EnableWeapon();
             }
         }
     }
@@ -86,6 +90,7 @@ public class Console : MonoBehaviour
         {
             onStay = true;
             consoleUI.SetActive(true);
+            weaponController = other.gameObject.GetComponent<PlayerWeaponController>();
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Officer : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Officer : MonoBehaviour
     [SerializeField] private Text message;
 
     private AudioManager audioManager;
+    private FirstPersonController firstPersonController;
 
     private List<Conversation> conversations = new List<Conversation>();
     private bool actionCompleted;
@@ -45,7 +47,9 @@ public class Officer : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !actionCompleted)
         {
+            firstPersonController = other.gameObject.GetComponent<FirstPersonController>();
             conversationpanel.SetActive(true);
+            firstPersonController.enabled = false;
             StartCoroutine(HandleMessages());
         }
     }
@@ -60,6 +64,7 @@ public class Officer : MonoBehaviour
 
     private void HandleConversationComplete()
     {
+        firstPersonController.enabled = true;
         door.transform.GetChild(0).GetComponentInChildren<Animation>().Play("LeftOpen");
         door.transform.GetChild(1).GetComponentInChildren<Animation>().Play("RightOpen");
         audioManager.Play("GO");

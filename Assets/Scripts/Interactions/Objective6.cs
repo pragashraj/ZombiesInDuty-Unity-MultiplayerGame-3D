@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Objective6 : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Objective6 : MonoBehaviour
     private GameManager gameManager;
     private ActionLoader actionLoader;
     private AudioManager audioManager;
+    private PlayerWeaponController weaponController;
 
     private bool onStay;
     private bool actionComplete;
@@ -30,10 +32,12 @@ public class Objective6 : MonoBehaviour
         {
             actionComplete = true;
             actionLoader.FillAmount = 0;
-            actionLoaderObj.SetActive(false);
+            actionLoaderObj.GetComponent<Image>().enabled = false;
             gameManager.Objective6Completed = true;
             gameManager.HandleCompletionUI("Objective 6 completed");
             audioManager.Stop("Typing");
+            weaponController.EnableWeapon();
+            StartCoroutine(Reset());
         }
 
         if (onStay)
@@ -53,6 +57,7 @@ public class Objective6 : MonoBehaviour
         {
             onStay = true;
             triggerUI.SetActive(true);
+            weaponController = other.gameObject.GetComponent<PlayerWeaponController>();
         }
     }
 
@@ -80,6 +85,7 @@ public class Objective6 : MonoBehaviour
                 actionLoaderObj.SetActive(true);
                 fillAmount += 1;
                 actionLoader.FillAmount = fillAmount;
+                weaponController.DisableWeapon();
             }
             else
             {
@@ -87,7 +93,15 @@ public class Objective6 : MonoBehaviour
                 actionLoaderObj.SetActive(false);
                 triggerUI.SetActive(!actionComplete);
                 audioStarted = false;
+                weaponController.EnableWeapon();
             }
         }
+    }
+
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(2f);
+        actionLoaderObj.GetComponent<Image>().enabled = true;
+        actionLoaderObj.SetActive(false);
     }
 }

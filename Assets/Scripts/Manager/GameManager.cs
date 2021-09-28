@@ -79,6 +79,15 @@ public class GameManager : MonoBehaviour
         objectCompletion.SetActive(true);
         completionMessage.text = message;
         coverPanel.Play();
+        audioManager.Play("Complete");
+        StartCoroutine(CloseCompletionUI());
+    }
+
+    public void CompletionMessageUI(string message)
+    {
+        objectCompletion.SetActive(true);
+        completionMessage.text = message;
+        coverPanel.Play();
         StartCoroutine(CloseCompletionUI());
     }
 

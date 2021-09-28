@@ -7,6 +7,7 @@ public class Objective5 : MonoBehaviour
 
     private GameManager gameManager;
     private AudioManager audioManager;
+    private PlayerWeaponController weaponController;
 
     private bool onStay;
     private bool actionComplete;
@@ -48,6 +49,7 @@ public class Objective5 : MonoBehaviour
         {
             onStay = true;
             triggerUI.SetActive(true);
+            weaponController = other.gameObject.GetComponent<PlayerWeaponController>();
         }
     }
 
@@ -73,6 +75,7 @@ public class Objective5 : MonoBehaviour
                 }
                 triggerUI.GetComponent<Animation>().Play("Wheeling");
                 fillAmount += 2;
+                weaponController.DisableWeapon();
             }
             else
             {
@@ -80,6 +83,7 @@ public class Objective5 : MonoBehaviour
                 triggerUI.SetActive(!actionComplete);
                 audioStarted = false;
                 triggerUI.GetComponent<Animation>().Stop("Wheeling");
+                weaponController.EnableWeapon();
             }
         }
     }
@@ -88,6 +92,6 @@ public class Objective5 : MonoBehaviour
     IEnumerator AfterCompletion()
     {
         yield return new WaitForSeconds(4f);
-        gameManager.HandleCompletionUI("Get backups now");
+        gameManager.CompletionMessageUI("Ok, Get backups now");
     }
 }

@@ -17,6 +17,7 @@ public class Objective2 : MonoBehaviour
     private GameManager gameManager;
     private ActionLoader actionLoader;
     private AudioManager audioManager;
+    private PlayerWeaponController weaponController;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class Objective2 : MonoBehaviour
             audioManager.Stop("Typing");
             actionLoader.FillAmount = 0;
             actionLoaderObj.GetComponent<Image>().enabled = false;
+            weaponController.EnableWeapon();
             StartCoroutine(Reset());
         }
 
@@ -56,6 +58,7 @@ public class Objective2 : MonoBehaviour
         {
             onStay = true;
             triggerUI.SetActive(true);
+            weaponController = other.gameObject.GetComponent<PlayerWeaponController>();
         }
     }
 
@@ -83,6 +86,7 @@ public class Objective2 : MonoBehaviour
                 actionLoaderObj.SetActive(true);
                 fillAmount += 2;
                 actionLoader.FillAmount = fillAmount;
+                weaponController.DisableWeapon();
             }
             else
             {
@@ -90,6 +94,7 @@ public class Objective2 : MonoBehaviour
                 actionLoaderObj.SetActive(false);
                 triggerUI.SetActive(!actionComplete);
                 audioStarted = false;
+                weaponController.EnableWeapon();
             }
         }
     }

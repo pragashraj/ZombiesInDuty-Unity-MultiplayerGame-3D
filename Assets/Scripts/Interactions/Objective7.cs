@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Objective7 : MonoBehaviour
 {
@@ -11,8 +12,7 @@ public class Objective7 : MonoBehaviour
     [SerializeField] private GameObject nurse;
 
     private GameManager gameManager;
-    private GameObject player;
-    private NurseManager nurseManager;
+    private FirstPersonController firstPersonController;
 
     private List<Conversation> conversations = new List<Conversation>();
 
@@ -43,8 +43,6 @@ public class Objective7 : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindObjectOfType<GameManager>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        nurseManager = nurse.GetComponent<NurseManager>();
         SetConversation(0);
     }
 
@@ -57,9 +55,10 @@ public class Objective7 : MonoBehaviour
         {
             if (objective6 && !objective7)
             {
+                firstPersonController = other.gameObject.GetComponent<FirstPersonController>();
+                firstPersonController.enabled = false;
+
                 conversationpanel.SetActive(true);
-                nurseManager.AnimatorType = "TALKING";
-                transform.LookAt(player.transform);
                 StartCoroutine(HandleMessages());
             }
 
@@ -110,8 +109,8 @@ public class Objective7 : MonoBehaviour
 
     private void HandleConversationComplete()
     {
+        firstPersonController.enabled = true;
         gameManager.Objective7Completed = true;
         gameManager.HandleCompletionUI("Objective 7 completed");
-        nurseManager.AnimatorType = "WORKING";
     }
 }

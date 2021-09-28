@@ -83,7 +83,7 @@ public class Objective8 : MonoBehaviour
     IEnumerator NextMessage()
     {
         yield return new WaitForSeconds(4f);
-        gameManager.HandleCompletionUI("Ok now clear the area!");
+        gameManager.CompletionMessageUI("Ok now clear the area!");
         gameObject.SetActive(false);
     }
 }
