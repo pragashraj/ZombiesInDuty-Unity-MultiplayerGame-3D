@@ -30,7 +30,15 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health > 0)
         {
-            health -= count;
+            float healthTemp = health - count;
+            if (healthTemp < 0)
+            {
+                health = 0;
+            }
+            else
+            {
+                health = healthTemp;
+            }
         }
     }
 }

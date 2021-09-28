@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     {
         enemyAI = gameObject.GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("PlayerX").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()
@@ -58,10 +58,14 @@ public class EnemyController : MonoBehaviour
                 break;
             case State.ATTACKING: HandleAttack();
                 break;
-            default:
-                animator.SetFloat("Movement", 0f, 0.1f, Time.deltaTime);
+            default: HandleIdle();
                 return;
         }
+    }
+
+    private void HandleIdle()
+    {
+        animator.SetFloat("Movement", 0f, 0.1f, Time.deltaTime);
     }
 
     private void HandleWalk()
