@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private bool objective6Completed;
     private bool objective7Completed;
     private bool objective8Completed;
+    private bool objective9Completed = true;
+    private bool objective10Completed;
 
     public bool Objective1Completed { get => objective1Completed; set => objective1Completed = value; }
     public bool Objective2Completed { get => objective2Completed; set => objective2Completed = value; }
@@ -32,11 +34,13 @@ public class GameManager : MonoBehaviour
     public bool Objective6Completed { get => objective6Completed; set => objective6Completed = value; }
     public bool Objective7Completed { get => objective7Completed; set => objective7Completed = value; }
     public bool Objective8Completed { get => objective8Completed; set => objective8Completed = value; }
-
+    public bool Objective9Completed { get => objective9Completed; set => objective9Completed = value; }
+    public bool Objective10Completed { get => objective10Completed; set => objective10Completed = value; }
 
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        PlayAudio("Theme");
     }
 
     private void Update()
