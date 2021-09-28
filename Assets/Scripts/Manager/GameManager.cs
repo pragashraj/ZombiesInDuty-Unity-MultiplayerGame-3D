@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private bool objective6Completed;
     private bool objective7Completed;
     private bool objective8Completed;
-    private bool objective9Completed = true;
+    private bool objective9Completed;
     private bool objective10Completed;
 
     public bool Objective1Completed { get => objective1Completed; set => objective1Completed = value; }
