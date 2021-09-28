@@ -5,6 +5,11 @@ public class PlayerWeaponController : MonoBehaviour
 {
     [SerializeField] private GameObject fpsCam;
     [SerializeField] private Weapon[] weapons;
+    [SerializeField] private GameObject grenadePrefab;
+    [SerializeField] private float throwForce = 20f;
+    [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private float radius = 5f;
+    [SerializeField] private GameObject bloodEffect;
 
     private float range = 100f;
     private int currentActiveIndex = 0;
@@ -105,7 +110,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             if (weapon.name == "Grenade")
             {
-                HandleGranede();
+                StartCoroutine(HandleGranede());
             } 
             else if (weapon.name == "Knife")
             {
@@ -113,12 +118,12 @@ public class PlayerWeaponController : MonoBehaviour
             }
             else
             {
-                HandleGunShot();
+                StartCoroutine(HandleGunShot());
             }
         }
     }
 
-    private void HandleGunShot()
+    IEnumerator HandleGunShot()
     {
         if (!reloading)
         {
@@ -135,6 +140,11 @@ public class PlayerWeaponController : MonoBehaviour
                 {
                     EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
                     enemyHealth.ReduceHealth(weapon.damage);
+                    GameObject blood = Instantiate(bloodEffect, target.transform.position, target.transform.rotation);
+                    PlayAudio("Roar");
+
+                    yield return new WaitForSeconds(3f);
+                    Destroy(blood);
                 }
             }
         }
@@ -145,9 +155,33 @@ public class PlayerWeaponController : MonoBehaviour
         animator.SetTrigger("Hit");
     }
 
-    private void HandleGranede()
+    IEnumerator HandleGranede()
     {
         animator.SetTrigger("Throw");
+
+        yield return new WaitForSeconds(1f);
+        Transform cam = fpsCam.transform;
+        GameObject grenede = Instantiate(grenadePrefab, cam.position, cam.rotation);
+        Rigidbody rb = grenede.GetComponent<Rigidbody>();
+        rb.AddForce(cam.forward * throwForce, ForceMode.VelocityChange);
+
+        yield return new WaitForSeconds(3f);
+        GameObject explosion = Instantiate(explosionEffect, grenede.transform.position, grenede.transform. rotation);
+        PlayAudio("Explosion");
+
+        Collider[] colliders =  Physics.OverlapSphere(grenede.transform.position, radius);
+        foreach(Collider nearByObject in colliders)
+        {
+            if (nearByObject.gameObject.tag == "Enemy")
+            {
+                nearByObject.GetComponent<EnemyHealth>().ReduceHealth(100f);
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+        grenede.transform.position = new Vector3(0, -15, 0);
+        Destroy(explosion);
+        Destroy(grenede);
     }
 
     private void HandleReloading()

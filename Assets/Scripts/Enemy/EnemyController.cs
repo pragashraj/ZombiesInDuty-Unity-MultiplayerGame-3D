@@ -38,11 +38,12 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        SwitchMovements();
+        HandleAI();
     }
 
     private void HandleAI()
     {
+        SwitchMovements();
         FindTarget();
         IsTargetNear();
         StopChasing();
@@ -91,7 +92,6 @@ public class EnemyController : MonoBehaviour
     private void HandleAttack()
     {
         animator.SetFloat("Movement", 0.75f, 0.1f, Time.deltaTime);
-        transform.LookAt(player);
     }
 
     private void FindTarget()

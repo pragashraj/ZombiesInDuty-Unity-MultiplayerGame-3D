@@ -23,6 +23,9 @@ public class EnemyHealth : MonoBehaviour
         {
             animator.SetTrigger("Death");
             agent.isStopped = true;
+            Vector3 pos = gameObject.transform.position;
+            pos.y = 0.4f;
+            gameObject.transform.position = pos;
         }
     }
 
