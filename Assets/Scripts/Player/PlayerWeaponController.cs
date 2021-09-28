@@ -6,9 +6,9 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameObject fpsCam;
     [SerializeField] private Weapon[] weapons;
     [SerializeField] private GameObject grenadePrefab;
-    [SerializeField] private float throwForce = 20f;
+    [SerializeField] private float throwForce = 12f;
     [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private float radius = 5f;
+    [SerializeField] private float radius = 15f;
     [SerializeField] private GameObject bloodEffect;
 
     private float range = 100f;
@@ -141,7 +141,6 @@ public class PlayerWeaponController : MonoBehaviour
                     EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
                     enemyHealth.ReduceHealth(weapon.damage);
                     GameObject blood = Instantiate(bloodEffect, target.transform.position, target.transform.rotation);
-                    PlayAudio("Roar");
 
                     yield return new WaitForSeconds(3f);
                     Destroy(blood);

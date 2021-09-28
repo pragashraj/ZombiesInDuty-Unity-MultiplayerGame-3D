@@ -15,6 +15,11 @@ public class PlayerHealth : MonoBehaviour
     {
         float amount = Map(Health, 100, 1);
         content.fillAmount = Mathf.Lerp(content.fillAmount, amount, Time.deltaTime * lerpSpeed);
+
+        if (health <= 0)
+        {
+            print("Player dead");
+        }
     }
 
     private float Map(float value, float max, float min)

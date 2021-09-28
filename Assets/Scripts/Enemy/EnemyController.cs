@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
@@ -92,6 +93,14 @@ public class EnemyController : MonoBehaviour
     private void HandleAttack()
     {
         animator.SetFloat("Movement", 0.75f, 0.1f, Time.deltaTime);
+        StartCoroutine(ReduceHealth());
+    }
+
+    IEnumerator ReduceHealth()
+    {
+        yield return new WaitForSeconds(10f);
+        if (state == State.ATTACKING)
+            player.GetComponent<PlayerHealth>().DecreaseHealthValue(1f);
     }
 
     private void FindTarget()
@@ -108,7 +117,7 @@ public class EnemyController : MonoBehaviour
 
     private void IsTargetNear()
     {
-        if (Vector3.Distance(transform.position, player.position) <= 2.5f)
+        if (Vector3.Distance(transform.position, player.position) <= 3f)
         {
             state = State.ATTACKING;
             agent.isStopped = true;

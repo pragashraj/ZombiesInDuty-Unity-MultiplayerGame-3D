@@ -86,6 +86,5 @@ public class Objective9 : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         gameManager.CompletionMessageUI("Ok lets get out from here");
-        gameObject.SetActive(false);
     }
 }

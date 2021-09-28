@@ -31,6 +31,7 @@ public class Objective5 : MonoBehaviour
             gameManager.Objective5Completed = true;
             gameManager.HandleCompletionUI("Objective 5 completed");
             triggerUI.GetComponent<Animation>().Stop("Wheeling");
+            weaponController.EnableWeapon();
             StartCoroutine(AfterCompletion());
         }
 
