@@ -1,24 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private Image content;
     [SerializeField] private float lerpSpeed;
 
-    [Range(0, 100)]
+    private MenuManager menuManager;
+    private PlayerWeaponController weaponController;
+    private FirstPersonController firstPersonController;
+
     private float health = 100;
+    private bool isDead;
 
     public float Health { get => health; set => health = value; }
-    
+
+    private void Start()
+    {
+        menuManager = FindObjectOfType<MenuManager>();
+        weaponController = gameObject.GetComponent<PlayerWeaponController>();
+        firstPersonController = gameObject.GetComponent<FirstPersonController>();
+    }
+
     void Update()
     {
         float amount = Map(Health, 100, 1);
         content.fillAmount = Mathf.Lerp(content.fillAmount, amount, Time.deltaTime * lerpSpeed);
 
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
-            print("Player dead");
+            isDead = true;
+            menuManager.HandleGameEndMenuActive(true);
+            weaponController.enabled = false;
+            firstPersonController.enabled = false;
+            Time.timeScale = 0;
+            Cursor.visible = true;
         }
     }
 

@@ -54,8 +54,6 @@ public class EnemyController : MonoBehaviour
     {
         switch (state)
         {
-            case State.WALKING: HandleWalk();
-                break;
             case State.CHASING: HandleChase();
                 break;
             case State.ATTACKING: HandleAttack();
@@ -108,10 +106,6 @@ public class EnemyController : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) < 20f)
         {
             state = State.CHASING;
-        } else
-        {
-            state = State.WALKING;
-            animator.SetFloat("Movement", 0.25f, 0.1f, Time.deltaTime);
         }
     }
 
@@ -133,8 +127,8 @@ public class EnemyController : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, player.position) > 20f)
             {
-                animator.SetFloat("Movement", 0.25f, 0.1f, Time.deltaTime);
-                state = State.WALKING;
+                animator.SetFloat("Movement", 0f, 0.1f, Time.deltaTime);
+                state = State.IDLE;
             }
         }
     }

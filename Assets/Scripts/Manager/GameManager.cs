@@ -61,8 +61,6 @@ public class GameManager : MonoBehaviour
         mapUI.SetActive(isMapOpen);
 
         HandleMapScroll();
-
-        print(objective9Completed);
     }
 
 

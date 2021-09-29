@@ -29,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
             animator.SetTrigger("Death");
             agent.isStopped = true;
             Vector3 pos = gameObject.transform.position;
-            pos.y = 0.5f;
+            pos.y = 0.8f;
             gameObject.transform.position = pos;
             StartCoroutine(DeActivate());
         }
@@ -43,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
             if (healthTemp < 0)
             {
                 health = 0;
+                agent.isStopped = true;
             }
             else
             {

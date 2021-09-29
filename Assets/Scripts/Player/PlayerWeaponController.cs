@@ -6,9 +6,9 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameObject fpsCam;
     [SerializeField] private Weapon[] weapons;
     [SerializeField] private GameObject grenadePrefab;
-    [SerializeField] private float throwForce = 12f;
+    [SerializeField] private float throwForce = 15f;
     [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private float radius = 15f;
+    [SerializeField] private float radius = 30f;
     [SerializeField] private GameObject bloodEffect;
 
     private float range = 100f;
@@ -46,7 +46,11 @@ public class PlayerWeaponController : MonoBehaviour
             HandleShoot();
             HandleWeaponSwitch();
             HandleWeaponActive();
-            HandleReloading();
+
+            if (weaponType == "Gun" && Input.GetKeyDown(KeyCode.R))
+            {
+                HandleReloading();
+            }
         }
     }
 
@@ -127,26 +131,42 @@ public class PlayerWeaponController : MonoBehaviour
     {
         if (!reloading)
         {
-            RaycastHit hit;
-            Transform cam = fpsCam.transform;
-
-            animator.SetTrigger("Shoot");
-            PlayAudio(weapon.shootSound);
-
-            if (Physics.Raycast(cam.position, cam.transform.forward, out hit, range))
+            if (weapon.totalBullet > 0)
             {
-                Transform target = hit.transform;
-                if (target.tag == "Enemy")
+                if (weapon.currentAmmo > 0)
                 {
-                    EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
-                    enemyHealth.ReduceHealth(weapon.damage);
-                    GameObject blood = Instantiate(bloodEffect, target.transform.position, target.transform.rotation);
+                    RaycastHit hit;
+                    Transform cam = fpsCam.transform;
 
-                    yield return new WaitForSeconds(3f);
-                    Destroy(blood);
+                    animator.SetTrigger("Shoot");
+                    PlayAudio(weapon.shootSound);
+                    weapon.currentAmmo--;
+
+                    if (Physics.Raycast(cam.position, cam.transform.forward, out hit, range))
+                    {
+                        Transform target = hit.transform;
+                        if (target.tag == "Enemy")
+                        {
+                            EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
+                            enemyHealth.ReduceHealth(weapon.damage);
+                            GameObject blood = Instantiate(bloodEffect, target.transform.position, target.transform.rotation);
+
+                            yield return new WaitForSeconds(3f);
+                            Destroy(blood);
+                        }
+                    }
+                }
+                else
+                {
+                    HandleReloading();
                 }
             }
-        }
+            else
+            {
+                weapon.currentAmmo = 0;
+                PlayAudio("BulletEmpty");
+            }
+        } 
     }
 
     private void HandleKnife()
@@ -156,40 +176,61 @@ public class PlayerWeaponController : MonoBehaviour
 
     IEnumerator HandleGranede()
     {
-        animator.SetTrigger("Throw");
-
-        yield return new WaitForSeconds(1f);
-        Transform cam = fpsCam.transform;
-        GameObject grenede = Instantiate(grenadePrefab, cam.position, cam.rotation);
-        Rigidbody rb = grenede.GetComponent<Rigidbody>();
-        rb.AddForce(cam.forward * throwForce, ForceMode.VelocityChange);
-
-        yield return new WaitForSeconds(3f);
-        GameObject explosion = Instantiate(explosionEffect, grenede.transform.position, grenede.transform. rotation);
-        PlayAudio("Explosion");
-
-        Collider[] colliders =  Physics.OverlapSphere(grenede.transform.position, radius);
-        foreach(Collider nearByObject in colliders)
+        if (weapon.totalBullet > 0)
         {
-            if (nearByObject.gameObject.tag == "Enemy")
-            {
-                nearByObject.GetComponent<EnemyHealth>().ReduceHealth(100f);
-            }
-        }
+            weapon.totalBullet--;
+            animator.SetTrigger("Throw");
 
-        yield return new WaitForSeconds(1f);
-        grenede.transform.position = new Vector3(0, -15, 0);
-        Destroy(explosion);
-        Destroy(grenede);
+            yield return new WaitForSeconds(1f);
+            Transform cam = fpsCam.transform;
+            GameObject grenede = Instantiate(grenadePrefab, cam.position, cam.rotation);
+            Rigidbody rb = grenede.GetComponent<Rigidbody>();
+            rb.AddForce(cam.forward * throwForce, ForceMode.VelocityChange);
+
+            yield return new WaitForSeconds(3f);
+            GameObject explosion = Instantiate(explosionEffect, grenede.transform.position, grenede.transform.rotation);
+            PlayAudio("Explosion");
+
+            Collider[] colliders = Physics.OverlapSphere(grenede.transform.position, radius);
+            foreach (Collider nearByObject in colliders)
+            {
+                if (nearByObject.gameObject.tag == "Enemy")
+                {
+                    nearByObject.GetComponent<EnemyHealth>().ReduceHealth(100f);
+                }
+            }
+
+            yield return new WaitForSeconds(1f);
+            grenede.transform.position = new Vector3(0, -15, 0);
+            Destroy(explosion);
+            Destroy(grenede);
+        }
+        else
+        {
+            PlayAudio("BulletEmpty");
+        }
     }
 
     private void HandleReloading()
     {
-        if (weaponType == "Gun" && Input.GetKeyDown(KeyCode.R))
+        if (weapon.totalBullet > 0)
         {
             reloading = true;
             PlayAudio(weapon.reloadSound);
             animator.SetTrigger("Reload");
+
+            int bulletsNeededTotReload = weapon.totalAmmo - weapon.currentAmmo;
+            if (bulletsNeededTotReload <= weapon.totalBullet)
+            {
+                weapon.totalBullet -= bulletsNeededTotReload;
+                weapon.currentAmmo += bulletsNeededTotReload;
+            }
+            else
+            {
+                weapon.currentAmmo += weapon.totalBullet;
+                weapon.totalBullet = 0;
+            }
+
             StartCoroutine(EndReload());
         }
     }
@@ -213,5 +254,10 @@ public class PlayerWeaponController : MonoBehaviour
     public void EnableWeapon()
     {
         weaponDisabled = false;
+    }
+
+    public Weapon[] GetWeapons()
+    {
+        return weapons;
     }
 }

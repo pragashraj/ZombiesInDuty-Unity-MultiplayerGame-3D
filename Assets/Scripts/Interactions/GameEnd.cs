@@ -3,16 +3,14 @@ using UnityEngine;
 public class GameEnd : MonoBehaviour
 {
     private GameManager gameManager;
+    private MenuManager menuManager;
+    private PlayerWeaponController weaponController;
 
     void Start()
     {
         gameManager = GameObject.FindObjectOfType<GameManager>();
-    }
-
-   
-    void Update()
-    {
-        
+        menuManager = FindObjectOfType<MenuManager>();
+        weaponController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerWeaponController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +19,8 @@ public class GameEnd : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && objective10)
         {
-            gameManager.HandleCompletionUI("Objective 10 completed");
+            weaponController.enabled = false;
+            gameManager.HandleCompletionUI("Level completed");
         }
     }
 
@@ -29,7 +28,9 @@ public class GameEnd : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            
+            Time.timeScale = 0;
+            Cursor.visible = true;
+            menuManager.HandleLevelEndMainMenuActive(true);
         }
     }
 }

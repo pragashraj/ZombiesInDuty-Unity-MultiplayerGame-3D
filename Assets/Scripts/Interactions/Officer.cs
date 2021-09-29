@@ -13,6 +13,7 @@ public class Officer : MonoBehaviour
 
     private AudioManager audioManager;
     private FirstPersonController firstPersonController;
+    private EnemyManager enemyManager;
 
     private List<Conversation> conversations = new List<Conversation>();
     private bool actionCompleted;
@@ -40,6 +41,8 @@ public class Officer : MonoBehaviour
     void Start()
     {
         audioManager = GameObject.FindObjectOfType<AudioManager>();
+        enemyManager = FindObjectOfType<EnemyManager>();
+        enemyManager.enabled = false;
         SetConversation(0);
     }
 
@@ -68,6 +71,7 @@ public class Officer : MonoBehaviour
         door.transform.GetChild(0).GetComponentInChildren<Animation>().Play("LeftOpen");
         door.transform.GetChild(1).GetComponentInChildren<Animation>().Play("RightOpen");
         audioManager.Play("GO");
+        enemyManager.enabled = true;
     }
 
     private void SetConversation(int i)
